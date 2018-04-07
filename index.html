@@ -7,22 +7,21 @@
     <title>jQuery UI Sortable - Default functionality</title>
     <link rel="stylesheet" href="css/jquery-ui.min.css">
     <style>
-    #sortable {
+    .swiper {
         list-style-type: none;
         margin: 0;
         padding: 0;
-        width: 60%;
+        width: 100%;
+        max-width: 350px;
     }
 
-    #sortable li {
+    .swiper li {
         margin: 0 3px 3px 3px;
-        padding: 0.4em;
-        padding-left: 1.5em;
+        padding: 0.4em 0.4em;
         font-size: 1.4em;
-        height: 18px;
     }
 
-    #sortable li span {
+    .swiper li span {
         position: absolute;
         margin-left: -1.3em;
     }
@@ -30,21 +29,12 @@
 </head>
 
 <body>
-    <ul id="sortable">
-        <li class="ui-state-default" id='i1'><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 1</li>
-        <li class="ui-state-default" id='i2'><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 2</li>
-        <li class="ui-state-default" id='i3'><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 3</li>
-        <li class="ui-state-default" id='i4'><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 4</li>
-        <li class="ui-state-default" id='i5'><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 5</li>
-        <li class="ui-state-default" id='i6'><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 6</li>
-        <li class="ui-state-default" id='i7'><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 7</li>
-        <li class="ui-state-default" id='i8'><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 8</li>
-    </ul>
+
+    <ul class="swiper"></ul>
     <br>
     <button class="button">Get</button>
 
 
-    <div class="swiper"></div>
 
 
     <script src="js/jquery-3.3.1.min.js"></script>
@@ -52,7 +42,7 @@
     <script>
     $(function() {
         //  Team Sortable 
-        $("#sortable").sortable({
+        $(".swiper").sortable({
             start: function(e, ui) {
                 // creates a temporary attribute on the element with the old index
                 $(this).attr('data-previndex', ui.item.index());
@@ -65,6 +55,8 @@
                 // alert('id of Item moved = ' + element_id + ' old position = ' + oldIndex + ' new position = ' + newIndex);
                 $(this).removeAttr('data-previndex');
                 $(this).attr('data-position', newIndex);
+
+                console.log("test");
             }
         });
         
@@ -72,12 +64,12 @@
 
         // Get Data
         $(".button").click(function(){
-            var idsInOrder = $("#sortable").sortable("toArray");
+            var idsInOrder = $(".swiper").sortable("toArray");
             console.log(idsInOrder);
         });
 
 
-        $.get ( "data/data-2018.json", function ( data ) {
+        $.get ( "data/data.json", function ( data ) {
             var groupsArray = data.Teams.slice ();
             populateParticle ( groupsArray );                
         });
@@ -87,46 +79,20 @@
             var results = [];
             var origArray = array.slice ();
             while ( origArray.length ) {
-                results.push ( origArray.splice ( 0, size ) );
+                results.push ( origArray.splice ( 0, 1 ) );
             }
             return results;
         }
 
         function populateParticle ( data ) {        
-
-
-            var groups = data.length > 8 ? chunks ( data, 4 ) : data;
-            var groupParent = $ ( '.swiper' );
-            var i = 0, j = 0;
-            console.log(groups);
-
-            groups.forEach ( function ( group ) {
-                var groupEl = $ ( '<ul data-index="' + i + '"></ul>' );
-                var instructionsHtml = '<div class="instructions">' +
-                        '<h3 class="group-title">Group</h3>' +
-                    '</div>';
-                groupEl.append ( instructionsHtml );
-                groupParent.append ( groupEl );
+            var i = 1;
+            $.each(data, function(index, team) {
+                var groupParent = $('.swiper');  
+                var li = $ ( "<li class='ui-state-default' id='team-id-"+i+"'>"+ i +" - " + team.displayName + "</li>");
+                groupParent.append ( li );
                 i++;
-
-                group.forEach ( function ( team ) {
-                    var teamdata = $.extend ( true, {}, team );
-                    delete teamdata.cssClasses;
-                    var li = $ ( "<li data-team='" + JSON.stringify ( teamdata ) + "'></li>" );
-                    // li.append ( '<img src="' + imgBucket + team.qualifiedTeam.toLowerCase () + '.svg" />' );
-                    li.append ( '<div class="team-name">' + team.displayName + '</div>' );
-                    li.append ( '<div class="button ' + team.cssClasses + '" data-index="' + j + '"></div>' );
-                    groupEl.append ( li );
-                    j++;
-
-                });
-
-            } );
-
+            });
         }
-
-
-
 
     });
     </script>
