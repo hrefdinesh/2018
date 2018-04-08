@@ -1,0 +1,682 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="img/favicon.ico">
+    <title>Predictor</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+
+  </head>
+
+  <body>
+		
+
+	<div class="container">
+		<div class="row">
+    		<div class="col-sm">
+    			<div class="intro">
+    				<h1>
+	                	Russia 2018
+    				</h1>
+	                <img class="img right" src="img/russia-wc-logo.svg">
+	            </div>
+    		</div>
+    	</div>
+
+    	<div class="row">
+    		<div class="col-sm">
+				<p>demo</p>
+    		</div>
+    	</div>
+
+	</div>
+
+
+
+	<section id="particle" class="header sticky-content">
+
+        <div class="wrapper">
+
+            <div class="intro">
+                <img class="img left" src="img/russia-intro-text.svg" />
+                <img class="img right" src="img/russia-wc-logo.svg" />
+            </div>
+
+            <div class="rounds">
+
+                <div class="round prefill" data-index="0">
+                    <div class="round-header">
+                        <h2>Group stage</h2>
+                        <div class="scroller">
+                            <span class="active"></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="group-parent">
+                        <div class="swiper"></div>
+                    </div>
+                </div>
+
+                <div class="round" data-index="1">
+                    <div class="round-header">
+                        <h2>Round of 16</h2>
+                        <div class="scroller">
+                            <span class="active"></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="group-parent instructions-in-ul">
+                        <div class="swiper roundof16"></div>
+                    </div>
+                </div>
+
+                <div class="round" data-index="2">
+                    <div class="round-header">
+                        <h2>Quarter-finals</h2>
+                        <div class="scroller">
+                            <span class="active"></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="group-parent instructions-in-ul">
+                        <div class="swiper"></div>
+                    </div>
+                </div>
+
+                <div class="round" data-index="3">
+                    <div class="round-header">
+                        <h2>Semi-finals</h2>
+                        <div class="scroller">
+                            <span class="active"></span>
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="group-parent instructions-in-ul">
+                        <div class="swiper semifinals"></div>
+                    </div>
+                </div>
+
+                <div class="round" data-index="4">
+                    <div class="round-header">
+                        <h2>Final</h2>
+                        <div class="scroller">
+                            <span class="active"></span>
+                        </div>
+                    </div>
+                    <div class="group-parent instructions-in-ul">
+                        <div class="swiper finals"></div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="winner">
+
+            <h3>Winners!</h3>
+
+            <div class="wrapper">
+                <h2>England</h2>
+                <div class="graphic">
+                    <img src="" />
+                </div>
+                <div class="share">
+                    <img src="img/share-fb.svg" class="share-btn fb" />
+                    <img src="img/share-tw.svg" class="share-btn tw" />
+                    <img src="img/share-email.svg" class="share-btn email" />
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+    
+
+    
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/hammer.min.js"></script>    
+    <script>
+      
+/*
+ HELPERS
+ */
+Number.prototype.lpad = function ( padString, length ) {
+	var str = this.toString ();
+	while ( str.length < length )
+		str = padString + str;
+	return str;
+};
+
+Array.prototype.move = function(from, to) {
+    this.splice(to, 0, this.splice(from, 1)[0]);
+};
+
+function isArray ( myArray ) {
+    return myArray.constructor.toString().indexOf("Array") > -1;
+}
+
+var simulatedWinner = '';
+var shareBucket = "teams/";
+var teams, scrollPositions, instructions, groupLabels, rounds = [ [], [], [], [] ];
+var imgBucket = "img/flags/";
+var winnersBucket = "teams/";
+var jsonBucket = "https://cf.eip.telegraph.co.uk/article-data";
+var prefillData = [];
+
+scrollPositions = [ 0, 0, 0, 0, 0];
+groupLabels = [ "A", "B", "C", "D", "E", "F", "G", "H" ];
+instructions = [
+    [
+        [ 'Group A 1st place', 'Group B 2nd place' ],
+        [ 'Group B 1st place', 'Group A 2nd place' ],
+        [ 'Group C 1st place', 'Group D 2nd place' ],
+        [ 'Group D 1st place', 'Group C 2nd place' ],
+        [ 'Group E 1st place', 'Group F 2nd place' ],
+        [ 'Group F 1st place', 'Group E 2nd place' ],
+        [ 'Group G 1st place', 'Group H 2nd place' ],
+        [ 'Group H 1st place', 'Group G 2nd place' ]
+    ],
+    [
+        [ 'RO16 Match one', 'RO16 Match two' ],
+        [ 'RO16 Match three', 'RO16 Match four' ],
+        [ 'RO16 Match five', 'RO16 Match six' ],
+        [ 'RO16 Match seven', 'RO16 Match eight' ]
+    ],
+    [
+        [ 'QF Match one', 'QF Match two' ],
+        [ 'QF Match three', 'QF Match four' ]
+    ],
+    [
+        [ 'SF Match one', 'SF Match two' ]
+    ]
+];
+
+$ ( document ).ready ( function () {
+
+    function init () {
+
+            $.get ( "data/data-2018.json", function ( data ) {
+
+                
+                var groupsArray = data.Teams.slice ();
+
+                // Group by alphabetic 
+                groupsArray.sort ( function ( a, b ) {
+                    // console.log("test"+a.group);
+                    if ( a.group < b.group ) return -1;
+                    if ( a.group > b.group ) return 1;
+                    if ( a.group === b.group ) {
+                        if ( a.groupPosition < b.groupPosition ) return -1;
+                        if ( a.groupPosition > b.groupPosition ) return 1;
+                    }
+                    return 0;
+                } );
+
+                teams = groupsArray;
+                populateParticle ( groupsArray );                
+            } );
+
+        //}
+    }
+
+    $( '.share-btn' ).click ( function ( e ) {
+        var url = '';
+        var pageUrl = shareBucket + simulatedWinner + ".html";
+        var article = "http://www.telegraph.co.uk/football/world-cup-2018-wallchart-predictor/";
+        var redirectUrl = "?redirect=" + encodeURIComponent ( article );
+
+        if ( $( e.currentTarget ).hasClass ( 'fb' ) ) url = "http://www.facebook.com/share.php?u=" + pageUrl + redirectUrl;
+        if ( $( e.currentTarget ).hasClass ( 'tw' ) ) url = "http://twitter.com/share?url=" + pageUrl + redirectUrl;
+
+        window.open ( url );
+    } );
+
+    $( '.swiper' ).each ( function ( i, el ) {
+        var mc = new Hammer ( el );
+        mc.on("swipe", function ( ev ) {
+            var index = parseInt ( $ ( ev.target ).parents ( '.round' ).attr ( 'data-index' ), 10 );
+            if ( ev.deltaX > 0 ) {
+                if ( scrollPositions [ index ] > 0 ) animateRoundStep ( index, scrollPositions [ index ] - 1 );
+            } else {
+                if ( scrollPositions [ index ] < $( '.round' ).eq ( index ).find ( '.scroller span' ).length - 1 ) animateRoundStepBack ( index, scrollPositions [ index ] + 1 );
+            }
+        });
+    } );
+
+
+    function chunks ( array, size ) {
+        var results = [];
+        var origArray = array.slice ();
+        while ( origArray.length ) {
+            results.push ( origArray.splice ( 0, size ) );
+        }
+        return results;
+    }
+
+    function populateParticle ( data ) {        
+        var groups = data.length > 8 ? chunks ( data, 4 ) : data;
+        var groupParent = $ ( '.round.prefill .group-parent .swiper' );
+        var i = 0, j = 0;
+
+        console.log("test"+groups)
+
+        groups.forEach ( function ( group ) {
+            var groupEl = $ ( '<ul data-index="' + i + '"></ul>' );
+            var instructionsHtml = '<div class="instructions">' +
+                    '<h3 class="group-title">Group ' + groupLabels [ i ] + '</h3>' +
+                    '<p class="group-instruction">Select 1st place</p>' +
+                '</div>';
+            groupEl.append ( instructionsHtml );
+            groupParent.append ( groupEl );
+            i++;
+
+            group.forEach ( function ( team ) {
+                var teamdata = $.extend ( true, {}, team );
+                delete teamdata.cssClasses;
+                var li = $ ( "<li data-team='" + JSON.stringify ( teamdata ) + "'></li>" );
+                li.append ( '<img src="' + imgBucket + team.qualifiedTeam.toLowerCase () + '.svg" />' );
+                li.append ( '<div class="team-name">' + team.displayName + '</div>' );
+                li.append ( '<div class="button ' + team.cssClasses + '" data-index="' + j + '"></div>' );
+                groupEl.append ( li );
+                j++;
+
+            } );
+        } );
+
+        window.dispatchEvent ( new Event ( 'resize' ) );
+        $( window ).trigger ( 'resize' );
+    }
+
+    $ ( '.round.prefill .group-parent .swiper' ).on ( 'click', '.button', function ( ev ) {
+        var $el = $ ( ev.currentTarget );
+        var groupIndex = parseInt ( $el.parents ( 'ul' ).attr ( 'data-index' ), 10 );
+        var teamData = JSON.parse ( $el.parents ( 'li' ).attr ( 'data-team' ) );
+        var $groupInstruction = $el.parents ( 'ul' ).find ( '.group-instruction' );
+        var thisRound = rounds [ 0 ];
+        var $thisUl = $el.parents ( 'ul' );
+        var arrPos = groupIndex === 0 ? $thisUl.find ( '.selected' ).length : ( ( groupIndex ) * 2 ) + $thisUl.find ( '.selected' ).length;
+
+        // toggle instructions as long as not disabled
+        if ( !$el.hasClass ( 'disabled' ) ) $groupInstruction.html ( $groupInstruction.html () === 'Done' ? 'Select 2nd place' : $groupInstruction.html () === 'Select 1st place' ? 'Select 2nd place' : 'Select 1st place' )
+
+        // add team to next round respecting limits
+        // if already selected
+        if ( $el.hasClass ( 'selected' ) ) {
+            console.log ( 'selected' );
+            //remove the team from the array of the next round
+            /*for ( var i = 0; i < thisRound.length; i++ ) {
+                if ( thisRound [ i ].displayName === $el.parents ( 'li' ).find ( '.team-name' ).text () ) {
+                    thisRound.splice ( i, 1, {} );
+                    break;
+                }
+            }*/
+            // remove all styles from the now unselected item
+            $el.removeClass ( 'selected first second' );
+            // if after removing we still have one selected, make sure it shows first rather than second and also alter the data
+            if ( $thisUl.find ( '.selected' ).length === 1 && $thisUl.find ( '.second' ).length > 0 ) {
+                var thisIndex = parseInt ( $thisUl.find ( '.second' ).attr ( 'data-index' ), 10 );
+                $thisUl.find ( '.second' ).removeClass ( 'second' ).addClass ( 'first' );
+                thisRound.move ( thisIndex, thisIndex - 1 );
+            }
+            // put all remaining items in disabled state so no more selections can happen
+            $thisUl.find ( '.disabled' ).removeClass ( 'disabled' );
+            propagateRemoval ( 0, teamData );
+            unsetWinner ();
+        } else { // else if not already selected
+            console.log ( 'not selected' );
+            // add the team to the array of the next round
+            thisRound [ arrPos ] = teamData ;
+            // add first or second class to the item as well as selected class
+            $el.addClass ( $thisUl.find ( '.selected' ).length === 0 ? 'first' : 'second' ).addClass ( 'selected' );
+            // add disabled state to all the rest if with this one, the total selected items are 2
+            if ( $thisUl.find ( '.selected' ).length === 2 ) $thisUl.find ( '.button' ).not ( '.selected' ).addClass ( 'disabled' );
+        }
+
+        // populate next round
+        populateRound ( 1, rounds [ 0 ] );
+        // if this group is complete and only if we have not reached the last page, scroll to the next
+        if ( $thisUl.find ( '.selected' ).length === 2 && groupIndex <= 6 ) {
+            animateRoundStep ( 0, groupIndex + 1 );
+            $groupInstruction.html ( 'Done' );
+        }
+        // but hide the instructions anymore!
+        if ( $thisUl.find ( '.selected' ).length === 2 && groupIndex === 7 ) $groupInstruction.html ( 'Group stage complete!' );
+    } );
+
+    function resizeParticle () {
+        window.dispatchEvent ( new Event ( 'resize' ) );
+        $( window ).trigger ( 'resize' );
+        setTimeout ( resizeParticle, 1000 );
+    }
+
+    function propagateRemoval ( index, data ) {
+        for ( var i = parseInt ( index, 10 ); i < rounds.length; i++ ) {
+            for ( var j = 0; j < rounds [ i ].length; j++ ) {
+                if ( rounds [ i ] [ j ].displayName === data.displayName ) {
+                    rounds [ i ].splice ( j, 1, {} );
+                }
+            }
+        }
+    }
+
+    function populateRound ( index, data ) {
+        var index = parseInt ( index, 10 );
+        var groupParent = $( '.round' ).eq ( index ).find ( '.group-parent .swiper' );
+        var instructionsArray = instructions [ index - 1 ];
+        var i = 0, j = 0, k = 0;
+        var currentSelection = [];
+        var groups;
+
+        if ( !isArray ( data [ 0 ] ) ) {
+
+            var serialisedData = data;
+            var fifaArray = [];
+
+            // match data to FIFA standards
+            if ( index === 1 ) {
+                if ( typeof serialisedData [ 0 ] !== 'undefined' ) fifaArray [ 0 ] = serialisedData [ 0 ];
+                if ( typeof serialisedData [ 3 ] !== 'undefined' ) fifaArray [ 1 ] = serialisedData [ 3 ];
+                if ( typeof serialisedData [ 2 ] !== 'undefined' ) fifaArray [ 2 ] = serialisedData [ 2 ];
+                if ( typeof serialisedData [ 1 ] !== 'undefined' ) fifaArray [ 3 ] = serialisedData [ 1 ];
+                if ( typeof serialisedData [ 4 ] !== 'undefined' ) fifaArray [ 4 ] = serialisedData [ 4 ];
+                if ( typeof serialisedData [ 7 ] !== 'undefined' ) fifaArray [ 5 ] = serialisedData [ 7 ];
+                if ( typeof serialisedData [ 6 ] !== 'undefined' ) fifaArray [ 6 ] = serialisedData [ 6 ];
+                if ( typeof serialisedData [ 5 ] !== 'undefined' ) fifaArray [ 7 ] = serialisedData [ 5 ];
+                if ( typeof serialisedData [ 8 ] !== 'undefined' ) fifaArray [ 8 ] = serialisedData [ 8 ];
+                if ( typeof serialisedData [ 11 ] !== 'undefined' ) fifaArray [ 9 ] = serialisedData [ 11 ];
+                if ( typeof serialisedData [ 10 ] !== 'undefined' ) fifaArray [ 10 ] = serialisedData [ 10 ];
+                if ( typeof serialisedData [ 9 ] !== 'undefined' ) fifaArray [ 11 ] = serialisedData [ 9 ];
+                if ( typeof serialisedData [ 12 ] !== 'undefined' ) fifaArray [ 12 ] = serialisedData [ 12 ];
+                if ( typeof serialisedData [ 15 ] !== 'undefined' ) fifaArray [ 13 ] = serialisedData [ 15 ];
+                if ( typeof serialisedData [ 14 ] !== 'undefined' ) fifaArray [ 14 ] = serialisedData [ 14 ];
+                if ( typeof serialisedData [ 13 ] !== 'undefined' ) fifaArray [ 15 ] = serialisedData [ 13 ];
+            } else if ( index === 2 ) {
+                if ( typeof serialisedData [ 0 ] !== 'undefined' ) fifaArray [ 0 ] = serialisedData [ 0 ];
+                if ( typeof serialisedData [ 2 ] !== 'undefined' ) fifaArray [ 1 ] = serialisedData [ 2 ];
+                if ( typeof serialisedData [ 1 ] !== 'undefined' ) fifaArray [ 2 ] = serialisedData [ 1 ];
+                if ( typeof serialisedData [ 3 ] !== 'undefined' ) fifaArray [ 3 ] = serialisedData [ 3 ];
+                if ( typeof serialisedData [ 4 ] !== 'undefined' ) fifaArray [ 4 ] = serialisedData [ 4 ];
+                if ( typeof serialisedData [ 6 ] !== 'undefined' ) fifaArray [ 5 ] = serialisedData [ 6 ];
+                if ( typeof serialisedData [ 5 ] !== 'undefined' ) fifaArray [ 6 ] = serialisedData [ 5 ];
+                if ( typeof serialisedData [ 7 ] !== 'undefined' ) fifaArray [ 7 ] = serialisedData [ 7 ];
+            } else if ( index === 3 ) {
+                if ( typeof serialisedData [ 0 ] !== 'undefined' ) fifaArray [ 0 ] = serialisedData [ 0 ];
+                if ( typeof serialisedData [ 2 ] !== 'undefined' ) fifaArray [ 1 ] = serialisedData [ 2 ];
+                if ( typeof serialisedData [ 1 ] !== 'undefined' ) fifaArray [ 2 ] = serialisedData [ 1 ];
+                if ( typeof serialisedData [ 3 ] !== 'undefined' ) fifaArray [ 3 ] = serialisedData [ 3 ];
+            } else if ( index === 4 ) {
+                fifaArray = data;
+            }
+
+            // keep state of selected items!!!
+            groupParent.find ( 'li' ).each ( function ( i, item ) {
+                if ( typeof fifaArray [ i ] !== 'undefined' ) {
+                    if ( ( JSON.parse ( $ ( item ).attr ( 'data-team' ) ).displayName === fifaArray [ i ].displayName) && $ ( item ).find ( '.button' ).hasClass ( 'selected' ) ) {
+                        currentSelection [ i ] = 'selected win';
+                    } else if ( ( JSON.parse ( $ ( item ).attr ( 'data-team' ) ).displayName === fifaArray [ i ].displayName) && $ ( item ).find ( '.button' ).hasClass ( 'disabled' ) ) {
+                        currentSelection [ i ] = 'disabled';
+                    }
+                }
+            } );
+
+            groups = fifaArray.length >= 2 ? chunks ( fifaArray, 2 ) : [ fifaArray ];
+
+            if ( serialisedData.length >= 4 || ( index === 4 && serialisedData.length >= 2 ) ) $( '.round' ).eq ( index ).slideDown ( function () {
+                window.dispatchEvent ( new Event ( 'resize' ) );
+                $( window ).trigger ( 'resize' );
+            } );
+        } else {
+            groups = data;
+        }
+
+        groupParent.html ( '' );
+
+        groups.forEach ( function ( group ) {
+            var groupEl = $ ( '<ul data-index="' + i + '"></ul>' );
+            var instructionsHtml = '<div class="instructions float">' +
+                                        '<h3 class="group-title">' + instructionsArray [ i ] [ 0 ] + '</h3>' +
+                                        '<h3 class="group-title">' + instructionsArray [ i ] [ 1 ] + '</h3>' +
+                                        '<p class="group-instruction">Select winner</p>' +
+                                    '</div>';
+            groupEl.append ( instructionsHtml );
+            groupParent.append ( groupEl );
+            i++;
+
+            group.forEach ( function ( team ) {
+                var teamdata = $.extend ( true, {}, team );
+                delete teamdata.cssClasses;
+                var li = $ ( "<li data-team='" + JSON.stringify ( teamdata ) + "'></li>" );
+                if ( 'displayName' in team ) {
+                    li.append ( '<img src="' + imgBucket + team.qualifiedTeam.toLowerCase () + '.svg" />' );
+                    li.append ( '<div class="team-name">' + team.displayName + '</div>' );
+                    li.append ( '<div class="button ' + currentSelection [ j ] + ' ' + team.cssClasses + '" data-index="' + j + '"></div>' );
+                }
+                groupEl.append ( li );
+                j++;
+
+            } );
+
+            if ( groupEl.find ( '.selected' ).length === 1 && groupEl.find ( '.disabled' ).length === 0 ) {
+                var teamSelected = JSON.parse ( groupEl.find ( '.selected' ).parents ( 'li').eq ( 0 ).attr ( 'data-team' ) );
+                //propagateRemoval ( index, teamSelected );
+                groupEl.find ( '.selected' ).removeClass ( 'selected win' );
+            }
+
+            if ( groupEl.find ( '.disabled' ).length === 1 && groupEl.find ( '.selected' ).length === 0 ) {
+                var teamDisabled = JSON.parse ( groupEl.find ( '.disabled' ).parents ( 'li').eq ( 0 ).attr ( 'data-team' ) );
+                //propagateRemoval ( index, teamDisabled );
+                groupEl.find ( '.disabled' ).removeClass ( 'disabled' );
+            }
+
+        } );
+
+        if ( index < 4 && rounds [ index ].length > 0 ) populateRound ( index + 1, rounds [ index ] );
+
+        window.dispatchEvent ( new Event ( 'resize' ) );
+        $( window ).trigger ( 'resize' );
+    }
+
+    $( '.round' ).not ( '.prefill' ).on ( 'click', '.button', function ( ev ) {
+        var $el = $ ( ev.currentTarget );
+        var roundIndex = parseInt ( $el.parents ( '.round' ).attr ( 'data-index' ), 10 );
+        var groupIndex = parseInt ( $el.parents ( 'ul' ).attr ( 'data-index' ), 10 );
+        var teamData = JSON.parse ( $el.parents ( 'li' ).attr ( 'data-team' ) );
+        var thisRound =  rounds [ roundIndex ];
+        var $thisUl = $el.parents ( 'ul' );
+        var slides = $el.parents ( '.round' ).find ( '.scroller span' ).length;
+        var arrPos = groupIndex;
+
+        if ( $el.hasClass ( 'selected' ) ) {
+
+
+            $el.removeClass ( 'selected win' );
+            //remove the team from the array of the next round
+            /*if ( roundIndex !== 4 ) {
+                for ( var i = 0; i < thisRound.length; i++ ) {
+                    if ( thisRound [ i ].displayName === $el.parents ( 'li' ).find ( '.team-name' ).text () ) {
+                        thisRound.splice ( i, 1, {} );
+                        break;
+                    }
+                }
+            }*/
+            $thisUl.find ( '.disabled' ).removeClass ( 'disabled' );
+            unsetWinner ();
+            if ( roundIndex !== 4 ) propagateRemoval ( roundIndex, teamData );
+        } else {
+            if ( roundIndex !== 4 ) thisRound [ arrPos ] = teamData;
+            else chooseWinner ( teamData, true );
+            $el.addClass ( 'selected win' );
+            if ( $thisUl.find ( '.selected' ).length === 1 ) $thisUl.find ( '.button' ).not ( '.selected' ).addClass ( 'disabled' );
+        }
+
+        if ( roundIndex !== 4 ) {
+            populateRound ( roundIndex + 1, thisRound );
+            //if this group is complete and only if we have not reached the last page, scroll to the next
+            if ( $thisUl.find ( '.selected' ).length === 1 && groupIndex <= slides - 2 ) animateRoundStep ( roundIndex, groupIndex + 1 );
+        }
+    } );
+
+    function animateRoundStep ( index, dx ) {
+        var index = parseInt ( index, 10 );
+        var dx = parseInt ( dx, 10 );
+        var $target = $( '.round' ).eq ( index );
+
+        scrollPositions [ index ] = dx;
+
+        $target.find ( '.group-parent .swiper' ).css ( { 'left': '-' + 100 * dx + 'vw' } );
+        $target.find ( '.scroller span' ).removeClass ( 'active' );
+        $target.find ( '.scroller span' ).eq ( dx ).addClass ( 'active' );
+    }
+
+    function animateRoundStepBack ( index, dx ) {
+        var index = parseInt ( index, 10 );
+        var dx = parseInt ( dx, 10 );
+        var $target = $( '.round' ).eq ( index );
+
+        scrollPositions [ index ] = dx;
+
+        if ( index === 0 ) {
+            $target.find ( '.group-title' ).html ( 'Group ' + groupLabels [ dx ] );
+        }
+
+        $target.find ( '.group-parent .swiper' ).css ( { 'left': '-' + 100 * dx + 'vw' } );
+        $target.find ( '.scroller span' ).removeClass ( 'active' );
+        $target.find ( '.scroller span' ).eq ( dx ).addClass ( 'active' );
+    }
+
+    function chooseWinner ( team, save ) {
+        var $winner = $( '.winner' );
+        var teamName = team.qualifiedTeam.replace ( ' ', '_' ).toLowerCase();
+        $winner.find ( '.wrapper' ).attr ( 'class', 'wrapper' ).addClass ( teamName );
+        $winner.find ( 'h2' ).html ( team.qualifiedTeam );
+        $winner.find ( '.graphic img' ).attr ( 'src', winnersBucket + teamName + '.svg' );
+        $winner.slideDown ( function () {
+            window.dispatchEvent ( new Event ( 'resize' ) );
+            $( window ).trigger ( 'resize' );
+        } );
+
+        simulatedWinner = teamName;
+
+        
+        var jsonData = [];
+
+        $( '.swiper' ).each ( function ( i, el ) {
+
+            jsonData [ i ] = [];
+
+            if ( save ) {
+                setTimeout ( function () {
+                    $ ( el ).find ( 'ul' ).each ( function ( j, ul ) {
+
+                        jsonData [ i ] [ j ] = [];
+
+                        $ ( ul ).find ( 'li' ).each ( function ( k, li ) {
+
+                            var classes = $ ( li ).find ( '.button' ).attr ( 'class' ).replace ( 'button', '' ).replace ( 'undefined', '' ).trim ();
+                            var item = JSON.parse ( $ ( li ).attr ( 'data-team' ) );
+
+                            item.cssClasses = classes;
+                            jsonData [ i ] [ j ].push ( item );
+
+                        } );
+
+                    } );
+
+                    // $.ajax ( {
+                    //     type: "POST",
+                    //     url: "https://tools.eip.telegraph.co.uk/v1/article-data",
+                    //     data: JSON.stringify ( {
+                    //         id: UUID,
+                    //         data: jsonData
+                    //     } ),
+                    //     success: function ( response ) {
+                    //         console.log ( response );
+                    //     }
+                    // } );
+
+                }, 2000 );
+            }
+
+        } );
+
+        window.dispatchEvent ( new Event ( 'resize' ) );
+        $( window ).trigger ( 'resize' );
+
+        setTimeout ( function () {
+            window.dispatchEvent ( new Event ( 'resize' ) );
+            $( window ).trigger ( 'resize' );
+        }, 2000 );
+    }
+
+    function unsetWinner ( team ) {
+        var $winner = $( '.winner' );
+        $winner.find ( 'h2' ).html ();
+        $winner.slideUp ();
+    }
+    init ();
+
+    resizeParticle ();
+
+} );
+
+/////////////////// PostMessage Resizer ///////////////////
+function findGetParameter(parameterName) {
+    var result = null,
+        tmp = [];
+    location.search
+        .substr(1)
+        .split("&")
+        .forEach(function (item) {
+            tmp = item.split("=");
+            if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+        });
+    return result;
+}
+
+
+var widgetHeight = 0;
+var resizeTimer = 0;
+var wrapper = document.getElementById("particle");
+var events = ["resize", "orientationchange", "load"];
+
+function resizer() {
+    var wh = wrapper.offsetHeight;
+    var prefill = findGetParameter('prefill')
+    widgetHeight = wh;
+    window.parent.postMessage(JSON.stringify({
+        prefill: prefill,
+        height: widgetHeight,
+        id: document.querySelector("html").getAttribute('data-widget-id'),
+    }), '*')
+}
+
+events.forEach(function(e){
+    window.addEventListener(e,function(){
+        resizer ();
+    },false);
+});
+
+resizer();</script>
+  </body>
+</html>

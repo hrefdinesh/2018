@@ -7,7 +7,7 @@
     <title>jQuery UI Sortable - Default functionality</title>
     <link rel="stylesheet" href="css/jquery-ui.min.css">
     <style>
-    .swiper {
+    .unlist {
         list-style-type: none;
         margin: 0;
         padding: 0;
@@ -15,24 +15,26 @@
         max-width: 350px;
     }
 
-    .swiper li {
+    .unlist li {
         margin: 0 3px 3px 3px;
         padding: 0.4em 0.4em;
         font-size: 1.4em;
     }
 
-    .swiper li span {
+    .unlist li span {
         position: absolute;
         margin-left: -1.3em;
+    }
+    .team-img img{
+        max-width: 80px;
     }
     </style>
 </head>
 
 <body>
 
-    <ul class="swiper"></ul>
-    <br>
-    <button class="button">Get</button>
+    <ul class="unlist league"></ul>
+    <div class="unlist semi-finals"></div>
 
 
 
@@ -41,54 +43,74 @@
     <script src="js/jquery-ui.min.js"></script>
     <script>
     $(function() {
+
+        var simulatedWinner = '';
+        var shareBucket = "teams/";        
+        var imgBucket = "img/icons_plain/";
+        var imgBucketbg = "img/icons_bg/";
+        var winnersBucket = "teams/";
+        var jsonBucket = "data/";
+
+
+
         //  Team Sortable 
-        $(".swiper").sortable({
+        $(".league").sortable({
             start: function(e, ui) {
                 // creates a temporary attribute on the element with the old index
                 $(this).attr('data-previndex', ui.item.index());
             },
             update: function(e, ui) {
-                // gets the new and old index then removes the temporary attribute
-                var newIndex = ui.item.index();
-                var oldIndex = $(this).attr('data-previndex');
-                var element_id = ui.item.attr('id');
-                // alert('id of Item moved = ' + element_id + ' old position = ' + oldIndex + ' new position = ' + newIndex);
-                $(this).removeAttr('data-previndex');
-                $(this).attr('data-position', newIndex);
+                var idsInOrder = $(".league").sortable("toArray");  
+               
+                idsInOrder = idsInOrder.slice(0,4);
 
-                console.log("test");
+          
+                drawSemiMatches(idsInOrder);
             }
         });
+
+        function drawSemiMatches(idsInOrder) {
+         
+            var semiFinals = $('.semi-finals');  
+            $('.semi-finals li').remove();
+
+            $.each(idsInOrder, function(index, vale) {
+                $.each(groupsArray, function(index, team) {
+                    if(vale == team.teamid) {
+                        console.log(team.displayName)
+                        var li = "<li>";
+                        li += "<div class='team-name'>"+ team.displayName +"</div>";
+                        li += "</li>";
+                        semiFinals.append ( li );
+                    } 
+                });
+            });
+          
+
+
+        };
         
         $("#sortable").disableSelection();
 
-        // Get Data
-        $(".button").click(function(){
-            var idsInOrder = $(".swiper").sortable("toArray");
-            console.log(idsInOrder);
-        });
 
 
+        var groupsArray;
         $.get ( "data/data.json", function ( data ) {
-            var groupsArray = data.Teams.slice ();
+            groupsArray = data.Teams.slice ();
             populateParticle ( groupsArray );                
         });
 
 
-        function chunks ( array, size ) {
-            var results = [];
-            var origArray = array.slice ();
-            while ( origArray.length ) {
-                results.push ( origArray.splice ( 0, 1 ) );
-            }
-            return results;
-        }
 
-        function populateParticle ( data ) {        
+        function populateParticle ( data ) {  
             var i = 1;
             $.each(data, function(index, team) {
-                var groupParent = $('.swiper');  
-                var li = $ ( "<li class='ui-state-default' id='team-id-"+i+"'>"+ i +" - " + team.displayName + "</li>");
+                
+                var groupParent = $('.league');  
+                var li = "<li class='ui-state-default' id='"+team.teamid+"'><div class='drag-div'>";
+                li += "<div class='team-img'><img src='"+imgBucket+""+team.displayName.toLowerCase()+".png' alt=''></div>";
+                li += "<div class='team-name'>"+ team.fullName+"</div>";
+                li += "</div></li>";
                 groupParent.append ( li );
                 i++;
             });
