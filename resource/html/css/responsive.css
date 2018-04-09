@@ -191,7 +191,25 @@
 
 /* xs */
 @media only screen and (max-width : 768px) {
-
+  
+  .team-name{
+    display: none;
+  }
+  .teamid.col-xs-2,
+  .teamid.col-sm-2 {
+    width: 25%;
+  }
+  .position_list [class*='col-sm']{
+    width: 100%;
+  }
+  
+  #leauge_list{
+    min-height: inherit;
+    margin-bottom: 30px;
+  }
+  .match-predictor .position_list{
+    min-height: 80px;
+  }
   h1{
     font-size: 22px;
   }

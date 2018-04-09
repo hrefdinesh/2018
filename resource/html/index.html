@@ -78,14 +78,14 @@
 	        				<br>
         				</div>
 						<div class="row">
-							<div class="col-sm-6">
+							<div class="col-sm-12">
 								<p class="draginfo">Drag and drop the team and choose 4 team for playoff round.</p>
 							    <div id="leauge_list" class="row league row-sm connect_lists">
 							    </div>
 							</div>
-							<div class="col-sm-6">
+							<div class="col-sm-6 col-xs-offset-3">
 								<div class="row row-sm">
-									<div class="col-sm-3">
+									<div class="col-xs-3 col-sm-3">
 										<div class="leauge_position">
 											<img src="images/position.png" alt="">
 											<span>1</span>											
@@ -94,7 +94,7 @@
 
 									    </div>										
 									</div>
-									<div class="col-sm-3">
+									<div class="col-xs-3 col-sm-3">
 										<div class="leauge_position">
 											<img src="images/position.png" alt="">
 											<span>2</span>											
@@ -102,7 +102,7 @@
 									    <div id="drop_list2" class="position_list connect_lists">								        
 									    </div>
 								    </div>
-									<div class="col-sm-3">
+									<div class="col-xs-3 col-sm-3">
 										<div class="leauge_position">
 											<img src="images/position.png" alt="">
 											<span>3</span>											
@@ -110,7 +110,7 @@
 									    <div id="drop_list3" class="position_list connect_lists">								        
 									    </div>
 								    </div>
-									<div class="col-sm-3">
+									<div class="col-xs-3 col-sm-3">
 										<div class="leauge_position">
 											<img src="images/position.png" alt="">
 											<span>4</span>											
@@ -132,6 +132,7 @@
 	        					</div>
 	        					<div class="col-sm-4">
 				        			<h4>Eliminator</h4>
+				        			<div class="eliminator"></div>
 	        					</div>
 	        					<div class="col-sm-4">
 				        			<h4>Qualifier 2</h4>
@@ -217,7 +218,7 @@
 	        receive: function(event, ui) {
 	            var $this = $(this);
 	            if ($this.children('div').length > 1 && $this.attr('id') != "leauge_list") {
-	                console.log('Only one per list!');
+	                // console.log('Only one per list!');
 	                $(ui.sender).sortable('cancel');
 	            }
 	        }
@@ -231,23 +232,23 @@
 	        update: function(e, ui) {
 	            var idsInOrder = $(".league").sortable("toArray");
 	            
-	            // (typeof $("#drop_list1").find(".teamid").attr("id") != 'undefined') ?  result[0]  = $("#drop_list1").find(".teamid").attr("id") : '';
-	            // (typeof $("#drop_list2").find(".teamid").attr("id") != 'undefined') ?  result[1]  = $("#drop_list2").find(".teamid").attr("id") : '';
-	            // (typeof $("#drop_list3").find(".teamid").attr("id") != 'undefined') ?  result[2]  = $("#drop_list3").find(".teamid").attr("id") : '';
-	            // (typeof $("#drop_list4").find(".teamid").attr("id") != 'undefined') ?  result[3]  = $("#drop_list4").find(".teamid").attr("id") : '';
-	           	result[0] =  $("#drop_list1").find(".teamid").attr("id");
-	            result[1] =  $("#drop_list2").find(".teamid").attr("id");
-	            result[2] =  $("#drop_list3").find(".teamid").attr("id");
-	            result[3] =  $("#drop_list4").find(".teamid").attr("id");
+	            (typeof $("#drop_list1").find(".teamid").attr("id") != 'undefined') ?  result[0]  = $("#drop_list1").find(".teamid").attr("id") : '';
+	            (typeof $("#drop_list2").find(".teamid").attr("id") != 'undefined') ?  result[1]  = $("#drop_list2").find(".teamid").attr("id") : '';
+	            (typeof $("#drop_list3").find(".teamid").attr("id") != 'undefined') ?  result[2]  = $("#drop_list3").find(".teamid").attr("id") : '';
+	            (typeof $("#drop_list4").find(".teamid").attr("id") != 'undefined') ?  result[3]  = $("#drop_list4").find(".teamid").attr("id") : '';
+	           	// result[0] =  $("#drop_list1").find(".teamid").attr("id");
+	            // result[1] =  $("#drop_list2").find(".teamid").attr("id");
+	            // result[2] =  $("#drop_list3").find(".teamid").attr("id");
+	            // result[3] =  $("#drop_list4").find(".teamid").attr("id");
 	           
-	            console.log("Position="+result);
+	            // console.log("Position="+result);
 	            // idsInOrder = idsInOrder.slice(0,4);
 	            drawSemiMatches(result);
 	        },
 	        receive: function(event, ui) {
 	            var $this = $(this);
 	            if ($this.children('div').length > 1 && $this.attr('id') != "leauge_list") {
-	                console.log('Only one per list!');
+	                // console.log('Only one per list!');
 	                $(ui.sender).sortable('cancel');
 	            }
 	        }
@@ -284,27 +285,37 @@
             var qualifier1 = $('.qualifier1');  
             $('.qualifier1 *').remove();
 
+            var eliminator = $('.eliminator');  
+            $('.eliminator *').remove();
 
 
 
-            $.each(idsInOrder, function(index, vale) {
-            	console.log("sss="+ typeof vale);
-            	if(typeof vale == 'undefined'){
-            		return false;
+
+            $.each(idsInOrder, function(k, vale) {
+
+            	if(typeof idsInOrder[0] != 'undefined'){            		
+	            	if(typeof idsInOrder[1] != 'undefined'){	            		
+		            	if (typeof idsInOrder[2] != 'undefined'){		            		
+			            	if(typeof idsInOrder[3] != 'undefined'){
+				                $.each(groupsArray, function(index, team) {
+
+
+
+				                    if(vale == team.teamid) {
+				                        var li = "<div>";
+				                        li += "<div class='team-name'>"+ team.displayName +"</div>";
+				                        li += "<div class='team-img'><img src='"+imgBucket+""+team.displayName.toLowerCase()+".png' alt=''></div>";
+				                        li += "</div>";
+				                        qualifier1.append ( li );
+				                        console.log("index"+index);
+				                    } 
+
+				                });   
+			            	}
+		            	}
+	            	}
             	}
-            });
-            	
-            $.each(idsInOrder, function(index, vale) {
-                $.each(groupsArray, function(index, team) {
 
-                    if(vale == team.teamid) {
-                        console.log(team.displayName)
-                        var li = "<li>";
-                        li += "<div class='team-name'>"+ team.displayName +"</div>";
-                        li += "</li>";
-                        qualifier1.append ( li );
-                    } 
-                });            		            	
             });
           
 
@@ -328,7 +339,7 @@
             $.each(data, function(index, team) {
                 
                 var groupParent = $('.league');  
-                var li = "<div class='col-sm-3 text-center teamid' id='"+team.teamid+"'><div class='notice drag-div'>";
+                var li = "<div class='col-xs-2 col-sm-2 text-center teamid' id='"+team.teamid+"'><div class='notice drag-div'>";
                 li += "<div class='team-img'><img src='"+imgBucket+""+team.displayName.toLowerCase()+".png' alt=''></div>";
                 li += "<div class='text-left team-name bg "+team.displayName.toLowerCase()+"'>"+ team.displayName+"</div>";
                 li += "</div></div>";

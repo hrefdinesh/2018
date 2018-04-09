@@ -18,6 +18,7 @@
     font-size: 14px;
     line-height: 22px;
     color: #000;
+    overflow-x: hidden;
   }
 
   html {
@@ -2763,7 +2764,7 @@ span.stButton_gradient,
 /* Notice */
 .notice {
     background-color: #fafafa;
-    margin-bottom: 10px;
+    margin: 5px auto;
 }
 .noticeBordered{
   border-left: 6px solid #7f7f84;  
@@ -2898,6 +2899,15 @@ span.stButton_gradient,
 }
 .match-predictor{
 }
+.teamid.col-sm-2 {
+  width: 12.5%;
+}
+#leauge_list {
+  background: #f3f3f3;
+  padding: 5px;
+  min-height: 170px;
+  margin-bottom: 50px;
+}
 .unlist {
   list-style-type: none;
   margin: 0;
@@ -2942,7 +2952,9 @@ span.stButton_gradient,
 .position_list [class*='col-sm']{
   width: 100%;
 }
-
+.position_list .notice{
+  margin: 0 auto;
+}
 .match-predictor .position_list li{
     height:25px;
     background:#9c9;
@@ -2958,9 +2970,11 @@ span.stButton_gradient,
 }
 .match-predictor .position_list{
     background:#f3f3f3; 
-    min-height:150px;
-    padding:5px; 
+    min-height:162px;
+    width: 100%;
+    padding:5px 0; 
     margin-top: 10px;
+    display: inline-block;
 }
 .draginfo{
   margin: 18px auto;
