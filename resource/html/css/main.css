@@ -3010,3 +3010,16 @@ span.stButton_gradient,
   border-bottom: 1px solid #e0e0e0;
   padding-bottom: 20px;
 }
+.team-items{
+  position: relative;
+}
+.team-item{
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 10;
+}
+.deselect .team-item img{
+   -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%);
+}
