@@ -292,7 +292,15 @@
 	            result1[1] =  $("#drop_list2").find(".teamid").attr("id");
 	            result2[0] =  $("#drop_list3").find(".teamid").attr("id");
 	            result2[1] =  $("#drop_list4").find(".teamid").attr("id");
+
+	            console.log("result1"+result1);
+	            console.log("result2"+result2);
 	            drawsemimatches(result1,result2);
+	            var $this = $(this);
+	            if ($this.children('div').length < 1 && $this.attr('id') != "leauge_list") {
+	            	var updateteamid = $this.attr('id');
+	            	matchupdate(updateteamid);
+	            }
 	        },
 	        receive: function(event, ui) {
 	            var $this = $(this);
@@ -470,6 +478,20 @@
 			    	$(".qualifier2-a1").append ( li );	
 	            }
 		    });
+	    };
+
+	    function matchupdate(updateteamid){
+	    	updateteamid = updateteamid[updateteamid.length -1];
+	    	if(updateteamid==1 || updateteamid==2){
+	    		$(".finals-a1 .team-item, .finals-a2 .team-item").remove();
+	    		 
+	    	}
+	    	if(updateteamid==3 || updateteamid==4){
+		    	$(".eliminator .team-items").removeClass('deselect')
+		    	$(".qualifier2-a2 .team-item").remove();
+		    	$(".finals-a2 .team-item").remove();	    		
+	    	}
+
 	    };
 
     });
