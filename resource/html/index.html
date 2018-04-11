@@ -77,9 +77,37 @@
 	        				<h1 class="leauge_head">Predict Now</h1>
 	        				<br>
         				</div>
+						<div class="row play-info">
+							<div class="col-sm-4 text-center wow fadeIn" data-wow-duration="1000ms" data-wow-delay="600ms">
+								<div class="single-service">
+			                        <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="300ms">
+			                            <img src="images/s2.png" alt="">
+			                        </div>
+									<h2>Drag and Drop</h2>
+									<p class="draginfo">Drag and drop the team and choose 4 team for playoff round.</p>
+			                    </div>
+							</div>
+							<div class="col-sm-4 text-center wow fadeIn" data-wow-duration="1000ms" data-wow-delay="600ms">
+								<div class="single-service">
+			                        <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="300ms">
+			                            <img src="images/s2.png" alt="">
+			                        </div>
+									<h2>Choose Final teams</h2>
+									<p class="draginfo">Click and choose the favroite team in playoff round.</p>
+			                    </div>
+							</div>
+							<div class="col-sm-4 text-center wow fadeIn" data-wow-duration="1000ms" data-wow-delay="600ms">
+								<div class="single-service">
+			                        <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="300ms">
+			                            <img src="images/s2.png" alt="">
+			                        </div>
+									<h2>Share your Prediction</h2>
+									<p class="draginfo">Share you pretiction to social media like Facebook, Twitter.</p>
+			                    </div>
+							</div>
+						</div>
 						<div class="row">
 							<div class="col-sm-12">
-								<p class="draginfo">Drag and drop the team and choose 4 team for playoff round.</p>
 							    <div id="leauge_list" class="row league row-sm connect_lists">
 							    </div>
 							</div>
@@ -179,12 +207,12 @@
 	        				<div class="row">
 	        					<div class="col-sm-4 col-sm-offset-4">
 									<div class="row">
-										<div class="col-xs-6 finals-a1">
+										<div class="col-xs-6 finals-a1 team-items">
 											<div class='team-img'>
 				        						<img src='images/icons_bg/tbc.png' alt=''>
 				        					</div>											
 										</div>
-										<div class="col-xs-6 finals-a2">
+										<div class="col-xs-6 finals-a2 team-items">
 											<div class='team-img'>
 				        						<img src='images/icons_bg/tbc.png' alt=''>
 				        					</div>											
@@ -193,6 +221,20 @@
 								</div>
 	        				</div>
     					</div>
+
+    					<div class="playoffsRounds text-center">
+							<h3>Winner</h3>        						
+	        				<div class="row">
+	        					<div class="col-sm-4 col-sm-offset-4">
+									<div class="winner-items">
+										<div class='team-img team-img-default'>
+			        						<img src='images/icons_bg/tbc.png' alt=''>
+			        					</div>											
+									</div>
+								</div>
+	        				</div>
+    					</div>
+
 					</div>
         		</div>
             </div>
@@ -292,9 +334,6 @@
 	            result1[1] =  $("#drop_list2").find(".teamid").attr("id");
 	            result2[0] =  $("#drop_list3").find(".teamid").attr("id");
 	            result2[1] =  $("#drop_list4").find(".teamid").attr("id");
-
-	            console.log("result1"+result1);
-	            console.log("result2"+result2);
 	            drawsemimatches(result1,result2);
 	            var $this = $(this);
 	            if ($this.children('div').length < 1 && $this.attr('id') != "leauge_list") {
@@ -315,7 +354,7 @@
         var simulatedWinner = '';
         var shareBucket = "teams/";        
         var imgBucket = "images/icons_bg/";
-        var imgBucketbg = "images/icons_bg/";
+        var imgBucketplain = "images/icons_plain/";
         var winnersBucket = "teams/";
         var jsonBucket = "data/";
 
@@ -385,53 +424,86 @@
         }
 
         $(document).on("click",".team-item",function() {
+
 	        var parent = $(this).parent();
 	        var finalitem = $(this).attr('id');
 	        var qualifier1item = $(this).attr('id');
 	        var qualifier2item;
 	        var final2;
-	        if(parent.hasClass('qualifier1-a1')){
-	        	$(".qualifier1-a1").removeClass('deselect');
-	        	$(".qualifier1-a2").addClass('deselect');
-	        	qualifier2item = $(".qualifier1-a2").find(".team-item").attr("id");
-	        	drawfinal(finalitem);     
-	        	qualifier2(qualifier2item);
-	        }
-	        else if(parent.hasClass('qualifier1-a2')){
-	        	$(".qualifier1-a2").removeClass('deselect');
-	        	$(".qualifier1-a1").addClass('deselect');
-	        	qualifier2item = $(".qualifier1-a1").find(".team-item").attr("id");
-	        	drawfinal(finalitem);
-	        	qualifier2(qualifier2item);
+	        var twinnerid;
 
-	        }
-	        else if(parent.hasClass('eliminator-a1')){
-	        	$(".eliminator-a1").removeClass('deselect');
-	        	$(".eliminator-a2").addClass('deselect');
-	        	qualifier1(qualifier1item);
-	        }
-	        else if(parent.hasClass('eliminator-a2')){
-	        	$(".eliminator-a2").removeClass('deselect');
-	        	$(".eliminator-a1").addClass('deselect');
-	        	qualifier1(qualifier1item);
-	        }
+	        if(parent.parent().find('.team-item').length > 1){
+	        	console.log("test"+parent.parent().find('.team-item').length);	        	
+	        	$(".winner-item").remove();
+		        if(parent.hasClass('qualifier1-a1')){
+		        	$(".qualifier1-a1").removeClass('deselect');
+		        	$(".qualifier1-a2").addClass('deselect');
+		        	$(".qualifier2 .team-items").removeClass('deselect');
+		        	qualifier2item = $(".qualifier1-a2").find(".team-item").attr("id");
+		        	drawfinal(finalitem);     
+		        	qualifier2(qualifier2item);
+		        }
+		        else if(parent.hasClass('qualifier1-a2')){
+		        	$(".qualifier1-a2").removeClass('deselect');
+		        	$(".qualifier1-a1").addClass('deselect');
+		        	$(".qualifier2 .team-items").removeClass('deselect');
+		        	qualifier2item = $(".qualifier1-a1").find(".team-item").attr("id");
+		        	drawfinal(finalitem);
+		        	qualifier2(qualifier2item);
 
-	        else if(parent.hasClass('qualifier2-a1')){
-	        	$(".qualifier2-a1").removeClass('deselect');
-	        	$(".qualifier2-a2").addClass('deselect');
-	        	final2 = $(".qualifier2-a1").find(".team-item").attr("id");
-	        	drawfinal2(final2);
-	        }
-	        else if(parent.hasClass('qualifier2-a2')){
-	        	$(".qualifier2-a1").removeClass('deselect');
-	        	$(".qualifier2-a2").addClass('deselect');
-	        	final2 = $(".qualifier2-a2").find(".team-item").attr("id");
-	        	drawfinal2(final2);
-	        }
+		        }
+		        else if(parent.hasClass('eliminator-a1')){
+		        	$(".eliminator-a1").removeClass('deselect');
+		        	$(".eliminator-a2").addClass('deselect');
+		        	$(".qualifier2 .team-items").removeClass('deselect');
+		        	qualifier1(qualifier1item);
+		        }
+		        else if(parent.hasClass('eliminator-a2')){
+		        	$(".eliminator-a2").removeClass('deselect');
+		        	$(".eliminator-a1").addClass('deselect');
+		        	$(".qualifier2 .team-items").removeClass('deselect');
+		        	qualifier1(qualifier1item);
+		        }
 
-	        
+		        else if(parent.hasClass('qualifier2-a1')){
+		        	$(".qualifier2-a1").removeClass('deselect');
+		        	$(".qualifier2-a2").addClass('deselect');
+		        	final2 = $(".qualifier2-a1").find(".team-item").attr("id");
+		        	drawfinal2(final2);
+		        }
+		        else if(parent.hasClass('qualifier2-a2')){
+		        	$(".qualifier2-a2").removeClass('deselect');
+		        	$(".qualifier2-a1").addClass('deselect');
+		        	final2 = $(".qualifier2-a2").find(".team-item").attr("id");
+		        	drawfinal2(final2);
+		        }
+		        else if(parent.hasClass('finals-a1')){
+		        	twinnerid = $(".finals-a1").find(".team-item").attr("id");
+		        	twinner(twinnerid);
+		        }
+		        else if(parent.hasClass('finals-a2')){
+		        	twinnerid = $(".finals-a2").find(".team-item").attr("id");
+		        	twinner(twinnerid);
+		        }
+	        }
 
 	    });
+
+	    function twinner(twinnerid){
+	    	$.each(groupsArray, function(index, team) {
+
+	            if(twinnerid == team.teamid) {
+	            	console.log("Winner="+team.displayName);
+	            	$(".winner-items .winner-item").remove();
+	            	var li = "<div class='winner-item gr_bg "+team.displayName.toLowerCase()+"'>";
+	            	li += "<img src='"+imgBucketplain+""+team.displayName.toLowerCase()+".png' alt=''>";
+			    	li += "<div class='team-img team-item gr_bg "+team.displayName.toLowerCase()+"' id='"+team.teamid+"'>";
+			    	li += team.fullName+"</div>";
+			    	li += "</div>";
+			    	$(".winner-items").append ( li );	
+	            }
+		    });
+	    };
 
 	    function drawfinal(finalitem){
 	    	$.each(groupsArray, function(index, team) {
@@ -446,10 +518,9 @@
 		    });
 	    };
 	    function drawfinal2(finalitem){
-	    	console.log("te");
-	    	$.each(groupsArray, function(index, team) {
-
+	    	$.each(groupsArray, function(index, team) {	    		
 	            if(finalitem == team.teamid) {
+	            	
 			    	$(".finals-a2 .team-item").remove();
 			    	var li = "<div class='team-img team-item' id='"+team.teamid+"'><img src='"+imgBucket+""+team.displayName.toLowerCase()+".png' alt=''></div>";
 			    	$(".finals-a2").append ( li );	
@@ -469,7 +540,6 @@
 		    });
 	    };
 	    function qualifier2(qualifier2item){
-
 	    	$.each(groupsArray, function(index, team) {
 
 	            if(qualifier2item == team.teamid) {
@@ -482,14 +552,16 @@
 
 	    function matchupdate(updateteamid){
 	    	updateteamid = updateteamid[updateteamid.length -1];
+	    	$(".winner-item").remove();
 	    	if(updateteamid==1 || updateteamid==2){
+	    		$(".qualifier2 .team-items, .qualifier1 .team-items").removeClass('deselect');
 	    		$(".finals-a1 .team-item, .finals-a2 .team-item").remove();
-	    		 
+	    		$(".qualifier2-a1 .team-item").remove();
 	    	}
 	    	if(updateteamid==3 || updateteamid==4){
-		    	$(".eliminator .team-items").removeClass('deselect')
+		    	$(".qualifier2 .team-items, .eliminator .team-items").removeClass('deselect');
 		    	$(".qualifier2-a2 .team-item").remove();
-		    	$(".finals-a2 .team-item").remove();	    		
+		    	$(".finals-a2 .team-item").remove();	
 	    	}
 
 	    };

@@ -2865,34 +2865,44 @@ span.stButton_gradient,
 }
 
 .match-predictor .dd.gr_bg {
-  background: linear-gradient(to right, #004c93 35%, transparent); 
+  /*background: linear-gradient(to top, #004c93 35%, transparent); */
+  background: linear-gradient(142.92deg, #004c93 0%, #0358a7 100%);
 }
 .match-predictor .kkr.gr_bg {
-  background: linear-gradient(to right, #3d2256 35%, transparent); 
+  /*background: linear-gradient(to top, #3d2256 35%, transparent); */
+  background: linear-gradient(142.92deg, #70458F 0%, #3D2057 100%);
 }
 .match-predictor .kxip.gr_bg {
-  background: linear-gradient(to right, #b32524 35%, transparent); 
+  /*background: linear-gradient(to top, #b32524 35%, transparent); */
+  background: linear-gradient(142.92deg, #AA4545 0%, #740F0B 100%); 
 }
 .match-predictor .mi.gr_bg {
-  background: linear-gradient(to right, #005ea0 35%, transparent); 
+  /*background: linear-gradient(to top, #005ea0 35%, transparent); */
+  background: linear-gradient(142.92deg, #005DA0 0%, #003A63 100%);
 }
 .match-predictor .rcb.gr_bg {
-  background: linear-gradient(to right, #000 35%, transparent); 
+  /*background: linear-gradient(to top, #000 35%, transparent); */
+  background: linear-gradient(142.92deg, #000 0%, #464646 100%);
 }
 .match-predictor .srh.gr_bg {
-  background: linear-gradient(to right, #fb653f 35%, transparent); 
+  /*background: linear-gradient(to top, #fb653f 35%, transparent); */
+  background:linear-gradient(142.92deg, #FB643E 0%, #B81C25 100%)
 }
 .match-predictor .csk.gr_bg {
-  background: linear-gradient(to right, #fdb913 35%, transparent); 
+  /*background: linear-gradient(to top, #fdb913 35%, transparent); */
+  background:linear-gradient(142.92deg, #FDB913 0%, #F85C00 100%);
 }
 .match-predictor .rr.gr_bg {
-  background: linear-gradient(to right, #004b8c 35%, transparent); 
+  /*background: linear-gradient(to top, #004b8c 35%, transparent); */
+  background: linear-gradient(142.92deg, #2D4D9D 0%, #172E5E 100%);
 }
 .match-predictor .gl.gr_bg {
-  background: linear-gradient(to right, #e4660b 35%, transparent); 
+  /*background: linear-gradient(to top, #e4660b 35%, transparent); */
+  background: linear-gradient(142.92deg, rgba(228, 102, 11) 0%, rgba(179, 80, 9) 100%);
 }
 .match-predictor .rps.gr_bg {
-  background: linear-gradient(to right, #153359 35%, transparent); 
+  /*background: linear-gradient(to top, #153359 35%, transparent); */
+  background: linear-gradient(142.92deg, rgba(21, 51, 89) 0%, rgba(11, 27, 48) 100%);
 }
 #predictor{
   padding: 20px 0;
@@ -3022,4 +3032,35 @@ span.stButton_gradient,
 .deselect .team-item img{
    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
     filter: grayscale(100%);
+}
+.winner-items{
+  position: relative;
+}
+.winner-item img{
+  position: relative;
+  z-index: 111;
+  max-height: 130px;
+}
+.winner-item .team-item{
+  bottom: 0;
+  top: inherit;
+}
+.winner-item{
+  position: relative;
+  background-image: url(../images/home/footer.png);
+  background-repeat: repeat-x;
+  background-position: bottom;
+  background-size: cover;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.winner-items .team-img-default{
+  padding: 20px 10px;
+  min-height: 170px; 
+}
+.play-info{
+  margin:20px auto 30px auto;
 }
