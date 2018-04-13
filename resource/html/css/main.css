@@ -2918,6 +2918,9 @@ span.stButton_gradient,
   min-height: 170px;
   margin-bottom: 50px;
 }
+.deselect .gr_bg{
+  background:none !important;
+}
 .unlist {
   list-style-type: none;
   margin: 0;

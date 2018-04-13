@@ -374,7 +374,7 @@
 		        $.each(groupsArray, function(index, team) {
 
 		            if(vale == team.teamid) {		                
-		                var li = "<div class='team-img team-item' id='"+team.teamid+"'><img src='"+imgBucket+""+team.displayName.toLowerCase()+".png' alt=''></div>";
+		                var li = "<div class='team-img team-item gr_bg "+team.displayName.toLowerCase()+"' id='"+team.teamid+"'><img src='"+imgBucket+""+team.displayName.toLowerCase()+".png' alt=''></div>";
 		                if(k==0){
 		                	qualifier1.find(".qualifier1-a1").append ( li );
 		                }
@@ -395,7 +395,7 @@
 
 		        $.each(groupsArray, function(index, team) {
 		            if(vale == team.teamid) {
-		                var li = "<div class='team-img team-item' id='"+team.teamid+"'><img src='"+imgBucket+""+team.displayName.toLowerCase()+".png' alt=''></div>";
+		                var li = "<div class='team-img team-item gr_bg "+team.displayName.toLowerCase()+"' id='"+team.teamid+"'><img src='"+imgBucket+""+team.displayName.toLowerCase()+".png' alt=''></div>";
 		                if(l==0){
 		                	eliminator.find(".eliminator-a1").append ( li );
 		                }
