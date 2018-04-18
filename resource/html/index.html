@@ -437,12 +437,11 @@
 
 	        if(parent.parent().find('.team-item').length > 1){
 	        	parent.addClass('selected');
-	        	console.log("test"+parent.parent().find('.team-item').length);	        	
 	        	$(".winner-item").remove();
 		        if(parent.hasClass('qualifier1-a1')){
 		        	$(".qualifier1-a1").removeClass('deselect');
 		        	$(".qualifier1-a2").addClass('deselect').removeClass('selected');
-		        	$(".qualifier2 .team-items").removeClass('deselect');
+		        	$(".qualifier2 .team-items, .finals .team-items").removeClass('selected deselect');
 		        	qualifier2item = $(".qualifier1-a2").find(".team-item").attr("id");
 		        	drawfinal(finalitem);     
 		        	qualifier2(qualifier2item);
@@ -450,7 +449,7 @@
 		        else if(parent.hasClass('qualifier1-a2')){
 		        	$(".qualifier1-a2").removeClass('deselect');
 		        	$(".qualifier1-a1").addClass('deselect').removeClass('selected');
-		        	$(".qualifier2 .team-items").removeClass('deselect');
+		        	$(".qualifier2 .team-items, .finals .team-items").removeClass('selected deselect');
 		        	qualifier2item = $(".qualifier1-a1").find(".team-item").attr("id");
 		        	drawfinal(finalitem);
 		        	qualifier2(qualifier2item);
@@ -459,36 +458,40 @@
 		        else if(parent.hasClass('eliminator-a1')){
 		        	$(".eliminator-a1").removeClass('deselect');
 		        	$(".eliminator-a2").addClass('deselect').removeClass('selected');
-		        	$(".qualifier2 .team-items").removeClass('deselect');
+		        	$(".qualifier2 .team-items, .finals .team-items").removeClass('selected deselect');
 		        	qualifier1(qualifier1item);
 		        }
 		        else if(parent.hasClass('eliminator-a2')){
 		        	$(".eliminator-a2").removeClass('deselect');
 		        	$(".eliminator-a1").addClass('deselect').removeClass('selected');
-		        	$(".qualifier2 .team-items").removeClass('deselect');
+		        	$(".qualifier2 .team-items, .finals .team-items").removeClass('selected deselect');
 		        	qualifier1(qualifier1item);
 		        }
 
 		        else if(parent.hasClass('qualifier2-a1')){
 		        	$(".qualifier2-a1").removeClass('deselect');
-		        	$(".qualifier2-a2").addClass('deselect').removeClass('selected');;
+		        	$(".qualifier2-a2").addClass('deselect').removeClass('selected');
+		        	$(".finals .team-items").removeClass('selected deselect');
 		        	final2 = $(".qualifier2-a1").find(".team-item").attr("id");
 		        	drawfinal2(final2);
 		        }
 		        else if(parent.hasClass('qualifier2-a2')){
 		        	$(".qualifier2-a2").removeClass('deselect');
-		        	$(".qualifier2-a1").addClass('deselect').removeClass('selected');;
+		        	$(".qualifier2-a1").addClass('deselect').removeClass('selected');
+		        	$(".finals .team-items").removeClass('selected deselect');
 		        	final2 = $(".qualifier2-a2").find(".team-item").attr("id");
 		        	drawfinal2(final2);
 		        }
 		        else if(parent.hasClass('finals-a1')){
 		        	twinnerid = $(".finals-a1").find(".team-item").attr("id");
 		        	twinner(twinnerid);
-		        	$(".finals-a2").removeClass('selected');
+		        	$(".finals-a1").removeClass('deselect').addClass('selected');
+		        	$(".finals-a2").removeClass('selected').addClass('deselect');
 		        }
 		        else if(parent.hasClass('finals-a2')){
 		        	twinnerid = $(".finals-a2").find(".team-item").attr("id");
-		        	$(".finals-a1").removeClass('selected');
+		        	$(".finals-a2").removeClass('deselect').addClass('selected');
+		        	$(".finals-a1").removeClass('selected').addClass('deselect');
 		        	twinner(twinnerid);
 		        }
 	        }
