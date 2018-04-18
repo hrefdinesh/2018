@@ -191,7 +191,10 @@
 
 /* xs */
 @media only screen and (max-width : 768px) {
-  
+  .drag-container-xs{
+      max-width: 320px;
+      margin: 0 auto;
+  }
   .team-name{
     display: none;
   }
@@ -208,7 +211,7 @@
     margin-bottom: 30px;
   }
   .match-predictor .position_list{
-    min-height: 80px;
+    min-height: 124px;
   }
   h1{
     font-size: 22px;
@@ -580,7 +583,6 @@
 }
 
 @media only screen and (max-width : 480px) {
-
   /* Pricing Table*/
 
   .single-price, .single-table {

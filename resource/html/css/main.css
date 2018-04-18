@@ -7,13 +7,12 @@
   Version: 1.1
   */
 
-  @import url(http://fonts.googleapis.com/css?family=Lato:100,300,400,700);
   @import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,300,600,700);
-  @import url(http://fonts.googleapis.com/css?family=Noto+Sans:400,700);
+
 
   body {
     background: #fff;
-    font-family: 'Lato', sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-weight: 300;
     font-size: 14px;
     line-height: 22px;
@@ -54,7 +53,7 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Lato', sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-weight: 300;
   }
 
@@ -470,7 +469,7 @@ ul.sub-menu {
   content: '"';
   font-size: 40px;
   color: #ea2c00;
-  font-family: 'Noto Sans', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   transform:rotate(180deg);
   -ms-transform:rotate(180deg); /* IE 9 */
   -webkit-transform: rotate(180deg); /* Opera, Chrome, and Safari */
@@ -484,7 +483,7 @@ ul.sub-menu {
   content: '"';
   font-size: 40px;
   color: #ea2c00;
-  font-family: 'Noto Sans', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   line-height: 0;
 }
 
@@ -698,9 +697,11 @@ ul.sub-menu {
   margin-bottom: 35px;
 }
 
-.single-service h2 {
+.single-service h3 {
   margin-top: 0;
+  font-weight: 500;
   margin-bottom: 15px;
+  color: #636363;
 }
 
 .single-service p {
@@ -2866,7 +2867,7 @@ span.stButton_gradient,
 
 .match-predictor .dd.gr_bg {
   /*background: linear-gradient(to top, #004c93 35%, transparent); */
-  background: linear-gradient(142.92deg, #004c93 0%, #0358a7 100%);
+  background: linear-gradient(142.92deg, #467eb3 0%, #0358a7 100%);
 }
 .match-predictor .kkr.gr_bg {
   /*background: linear-gradient(to top, #3d2256 35%, transparent); */
@@ -2890,7 +2891,7 @@ span.stButton_gradient,
 }
 .match-predictor .csk.gr_bg {
   /*background: linear-gradient(to top, #fdb913 35%, transparent); */
-  background:linear-gradient(142.92deg, #FDB913 0%, #F85C00 100%);
+  background:linear-gradient(142.92deg, #FDB913 0%, #fd9f3e 100%);
 }
 .match-predictor .rr.gr_bg {
   /*background: linear-gradient(to top, #004b8c 35%, transparent); */
@@ -2982,16 +2983,67 @@ span.stButton_gradient,
     margin-top:5px;
 }
 .match-predictor .position_list{
-    background:#f3f3f3; 
+    background-color:#f3f3f3; 
+    background-image: url(../images/drag.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 64px;
     min-height:162px;
     width: 100%;
     padding:5px 0; 
     margin-top: 10px;
     display: inline-block;
+    position: relative;
+}
+.match-predictor .position_list:before{
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  font-size: 12px;
+  color: #999;
+  padding: 5px 10px;
+  line-height: 1.333;
+  text-align: center;
+}
+#drop_list1:before{
+  content: "Drag and drop the 1st team here"
+}
+#drop_list2:before{
+  content: "Drag and drop the 1st team here"
+}
+#drop_list3:before{
+  content: "Drag and drop the 1st team here"
+}
+#drop_list4:before{
+  content: "Drag and drop the 1st team here"
+}
+.drag-div{
+  cursor: -webkit-grab;
+  cursor: -moz-grab;
+  position: relative;
+}
+.drag-div:after,
+.drag-div:before{
+    content: "..";
+    position: absolute;
+    width: 16px;
+    line-height: 1.33;
+    font-size: 24px;
+    color: #636363;    
+    left: 2px;
+}
+.drag-div:after{
+  content: "..";
+  top: -12px;
+}
+.drag-div:before {
+  top: -6px;
 }
 .draginfo{
   margin: 18px auto;
-  font-size: 16px;
+  font-size: 14px;
 }
 .leauge_position{
   text-align: center;
@@ -3012,7 +3064,20 @@ span.stButton_gradient,
   line-height: 50px;
   color: #e23a31;
 }
+.leagueStage h3:before,
+.playoffsRounds h3:before{
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  margin-left: -75px;
+  width: 150px;
+  height: 2px;
+  background-color: rgb(53, 188, 210);
+}
+.leagueStage h3,
 .playoffsRounds h3{
+  position: relative;
   margin:30px auto;
   padding-bottom: 10px;
   border-bottom: solid 1px #e0e0e0;
@@ -3020,8 +3085,19 @@ span.stButton_gradient,
   font-weight: 500;
 }
 .leauge_head{
+  font-size: 24px;
   border-bottom: 1px solid #e0e0e0;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
+  position: relative;
+}
+.leauge_head:before{
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 160px;
+  height: 2px;
+  background-color: rgb(53, 188, 210);
 }
 .team-items{
   position: relative;
@@ -3031,6 +3107,40 @@ span.stButton_gradient,
   left: 0;
   top: 0;
   z-index: 10;
+  cursor: pointer;
+}
+.selected .team-item:before{
+  /*content: "Selected";
+  position: absolute;
+  left: 0;
+  bottom: 0;*/
+}
+.selected-item{
+  display: none;
+}
+.selected  .selected-item{
+    padding: 5px;
+    bottom: 10px;
+    left: 50%;
+    display: block;
+    position: absolute;
+    width: 36px;
+    opacity: 0.9;
+    height: 36px;
+    border-radius: 50%;
+
+}
+.selected-item:before{
+  content: "";
+  position: absolute;
+  left: -1px;
+  bottom: 0;
+  width: 36px;
+  height: 36px;
+  background-image: url(../images/icons_plain/ipl-logo.png); 
+  background-size: 18px;
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 .deselect .team-item img{
    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
@@ -3065,5 +3175,5 @@ span.stButton_gradient,
   min-height: 170px; 
 }
 .play-info{
-  margin:20px auto 30px auto;
+  margin:30px auto 30px auto;
 }

@@ -72,19 +72,16 @@
         <div class="container">
             <div class="row">
         		<div class="col-sm-12">
-        			<div class="match-predictor">
-        				<div class="text-center">
-	        				<h1 class="leauge_head">Predict Now</h1>
-	        				<br>
-        				</div>
+        			<div class="match-predictor">        				
+        				<h2 class="leauge_head">Predict Now</h2>
 						<div class="row play-info">
 							<div class="col-sm-4 text-center wow fadeIn" data-wow-duration="1000ms" data-wow-delay="600ms">
 								<div class="single-service">
 			                        <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="300ms">
-			                            <img src="images/s2.png" alt="">
+			                            <img src="images/s1.png" alt="">
 			                        </div>
-									<h2>Drag and Drop</h2>
-									<p class="draginfo">Drag and drop the team and choose 4 team for playoff round.</p>
+									<h3>Drag and Drop</h3>
+									<p class="draginfo">Drag and drop the top 4 team from leauge stage.</p>
 			                    </div>
 							</div>
 							<div class="col-sm-4 text-center wow fadeIn" data-wow-duration="1000ms" data-wow-delay="600ms">
@@ -92,60 +89,65 @@
 			                        <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="300ms">
 			                            <img src="images/s2.png" alt="">
 			                        </div>
-									<h2>Choose Final teams</h2>
+									<h3>Choose Final teams</h3>
 									<p class="draginfo">Click and choose the favroite team in playoff round.</p>
 			                    </div>
 							</div>
 							<div class="col-sm-4 text-center wow fadeIn" data-wow-duration="1000ms" data-wow-delay="600ms">
 								<div class="single-service">
 			                        <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="300ms">
-			                            <img src="images/s2.png" alt="">
+			                            <img src="images/s3.png" alt="">
 			                        </div>
-									<h2>Share your Prediction</h2>
+									<h3>Share your Prediction</h3>
 									<p class="draginfo">Share you pretiction to social media like Facebook, Twitter.</p>
 			                    </div>
 							</div>
+						</div>
+						<div class="leagueStage text-center">
+							<h3>League stage</h3>
 						</div>
 						<div class="row">
 							<div class="col-sm-12">
 							    <div id="leauge_list" class="row league row-sm connect_lists">
 							    </div>
 							</div>
-							<div class="col-sm-6 col-sm-offset-3">
-								<div class="row row-sm">
-									<div class="col-xs-3 col-sm-3">
-										<div class="leauge_position">
-											<img src="images/position.png" alt="">
-											<span>1</span>											
-										</div>
-									    <div id="drop_list1" class="position_list connect_lists">
+							<div class="col-md-6 col-md-offset-3 col-sm-10 col-sm-offset-1">
+								<div class="drag-container-xs">
+									<div class="row row-sm">
+										<div class="col-xs-6 col-sm-3">
+											<div class="leauge_position">
+												<img src="images/position.png" alt="">
+												<span>1</span>											
+											</div>
+										    <div id="drop_list1" class="position_list connect_lists">
 
-									    </div>										
+										    </div>										
+										</div>
+										<div class="col-xs-6 col-sm-3">
+											<div class="leauge_position">
+												<img src="images/position.png" alt="">
+												<span>2</span>											
+											</div>
+										    <div id="drop_list2" class="position_list connect_lists">								        
+										    </div>
+									    </div>
+										<div class="col-xs-6 col-sm-3">
+											<div class="leauge_position">
+												<img src="images/position.png" alt="">
+												<span>3</span>											
+											</div>
+										    <div id="drop_list3" class="position_list connect_lists">								        
+										    </div>
+									    </div>
+										<div class="col-xs-6 col-sm-3">
+											<div class="leauge_position">
+												<img src="images/position.png" alt="">
+												<span>4</span>											
+											</div>
+										    <div id="drop_list4" class="position_list connect_lists">								        
+										    </div>									
+									    </div>				
 									</div>
-									<div class="col-xs-3 col-sm-3">
-										<div class="leauge_position">
-											<img src="images/position.png" alt="">
-											<span>2</span>											
-										</div>
-									    <div id="drop_list2" class="position_list connect_lists">								        
-									    </div>
-								    </div>
-									<div class="col-xs-3 col-sm-3">
-										<div class="leauge_position">
-											<img src="images/position.png" alt="">
-											<span>3</span>											
-										</div>
-									    <div id="drop_list3" class="position_list connect_lists">								        
-									    </div>
-								    </div>
-									<div class="col-xs-3 col-sm-3">
-										<div class="leauge_position">
-											<img src="images/position.png" alt="">
-											<span>4</span>											
-										</div>
-									    <div id="drop_list4" class="position_list connect_lists">								        
-									    </div>									
-								    </div>				
 								</div>
 							</div>
 
@@ -206,7 +208,7 @@
 							<h3>Final</h3>        						
 	        				<div class="row">
 	        					<div class="col-sm-4 col-sm-offset-4">
-									<div class="row">
+									<div class="row finals">
 										<div class="col-xs-6 finals-a1 team-items">
 											<div class='team-img'>
 				        						<img src='images/icons_bg/tbc.png' alt=''>
@@ -374,7 +376,7 @@
 		        $.each(groupsArray, function(index, team) {
 
 		            if(vale == team.teamid) {		                
-		                var li = "<div class='team-img team-item gr_bg "+team.displayName.toLowerCase()+"' id='"+team.teamid+"'><img src='"+imgBucket+""+team.displayName.toLowerCase()+".png' alt=''></div>";
+		                var li = "<div class='team-img team-item' id='"+team.teamid+"'><img src='"+imgBucket+""+team.displayName.toLowerCase()+".png' alt=''><div class='selected-item gr_bg "+team.displayName.toLowerCase()+"'></div></div>";
 		                if(k==0){
 		                	qualifier1.find(".qualifier1-a1").append ( li );
 		                }
@@ -395,7 +397,7 @@
 
 		        $.each(groupsArray, function(index, team) {
 		            if(vale == team.teamid) {
-		                var li = "<div class='team-img team-item gr_bg "+team.displayName.toLowerCase()+"' id='"+team.teamid+"'><img src='"+imgBucket+""+team.displayName.toLowerCase()+".png' alt=''></div>";
+		                var li = "<div class='team-img team-item' id='"+team.teamid+"'><img src='"+imgBucket+""+team.displayName.toLowerCase()+".png' alt=''><div class='selected-item gr_bg "+team.displayName.toLowerCase()+"'></div></div>";
 		                if(l==0){
 		                	eliminator.find(".eliminator-a1").append ( li );
 		                }
@@ -433,11 +435,12 @@
 	        var twinnerid;
 
 	        if(parent.parent().find('.team-item').length > 1){
+	        	parent.addClass('selected');
 	        	console.log("test"+parent.parent().find('.team-item').length);	        	
 	        	$(".winner-item").remove();
 		        if(parent.hasClass('qualifier1-a1')){
 		        	$(".qualifier1-a1").removeClass('deselect');
-		        	$(".qualifier1-a2").addClass('deselect');
+		        	$(".qualifier1-a2").addClass('deselect').removeClass('selected');
 		        	$(".qualifier2 .team-items").removeClass('deselect');
 		        	qualifier2item = $(".qualifier1-a2").find(".team-item").attr("id");
 		        	drawfinal(finalitem);     
@@ -445,7 +448,7 @@
 		        }
 		        else if(parent.hasClass('qualifier1-a2')){
 		        	$(".qualifier1-a2").removeClass('deselect');
-		        	$(".qualifier1-a1").addClass('deselect');
+		        	$(".qualifier1-a1").addClass('deselect').removeClass('selected');
 		        	$(".qualifier2 .team-items").removeClass('deselect');
 		        	qualifier2item = $(".qualifier1-a1").find(".team-item").attr("id");
 		        	drawfinal(finalitem);
@@ -454,35 +457,37 @@
 		        }
 		        else if(parent.hasClass('eliminator-a1')){
 		        	$(".eliminator-a1").removeClass('deselect');
-		        	$(".eliminator-a2").addClass('deselect');
+		        	$(".eliminator-a2").addClass('deselect').removeClass('selected');
 		        	$(".qualifier2 .team-items").removeClass('deselect');
 		        	qualifier1(qualifier1item);
 		        }
 		        else if(parent.hasClass('eliminator-a2')){
 		        	$(".eliminator-a2").removeClass('deselect');
-		        	$(".eliminator-a1").addClass('deselect');
+		        	$(".eliminator-a1").addClass('deselect').removeClass('selected');
 		        	$(".qualifier2 .team-items").removeClass('deselect');
 		        	qualifier1(qualifier1item);
 		        }
 
 		        else if(parent.hasClass('qualifier2-a1')){
 		        	$(".qualifier2-a1").removeClass('deselect');
-		        	$(".qualifier2-a2").addClass('deselect');
+		        	$(".qualifier2-a2").addClass('deselect').removeClass('selected');;
 		        	final2 = $(".qualifier2-a1").find(".team-item").attr("id");
 		        	drawfinal2(final2);
 		        }
 		        else if(parent.hasClass('qualifier2-a2')){
 		        	$(".qualifier2-a2").removeClass('deselect');
-		        	$(".qualifier2-a1").addClass('deselect');
+		        	$(".qualifier2-a1").addClass('deselect').removeClass('selected');;
 		        	final2 = $(".qualifier2-a2").find(".team-item").attr("id");
 		        	drawfinal2(final2);
 		        }
 		        else if(parent.hasClass('finals-a1')){
 		        	twinnerid = $(".finals-a1").find(".team-item").attr("id");
 		        	twinner(twinnerid);
+		        	$(".finals-a2").removeClass('selected');
 		        }
 		        else if(parent.hasClass('finals-a2')){
 		        	twinnerid = $(".finals-a2").find(".team-item").attr("id");
+		        	$(".finals-a1").removeClass('selected');
 		        	twinner(twinnerid);
 		        }
 	        }
@@ -512,7 +517,7 @@
 	            	$(".qualifier2-a2").removeClass("deselect");
 			    	$(".finals-a1 .team-item").remove();
 			    	$(".finals-a2 .team-item").remove().parent().removeClass("deselect");
-			    	var li = "<div class='team-img team-item' id='"+team.teamid+"'><img src='"+imgBucket+""+team.displayName.toLowerCase()+".png' alt=''></div>";
+			    	var li = "<div class='team-img team-item' id='"+team.teamid+"'><img src='"+imgBucket+""+team.displayName.toLowerCase()+".png' alt=''><div class='selected-item gr_bg "+team.displayName.toLowerCase()+"'></div></div>";
 			    	$(".finals-a1").append ( li );	
 	            }
 		    });
@@ -522,7 +527,7 @@
 	            if(finalitem == team.teamid) {
 	            	
 			    	$(".finals-a2 .team-item").remove();
-			    	var li = "<div class='team-img team-item' id='"+team.teamid+"'><img src='"+imgBucket+""+team.displayName.toLowerCase()+".png' alt=''></div>";
+			    	var li = "<div class='team-img team-item' id='"+team.teamid+"'><img src='"+imgBucket+""+team.displayName.toLowerCase()+".png' alt=''><div class='selected-item gr_bg "+team.displayName.toLowerCase()+"'></div></div>";
 			    	$(".finals-a2").append ( li );	
 	            }
 		    });
@@ -534,7 +539,7 @@
 	            	$(".qualifier2-a2").removeClass("deselect");
 			    	$(".qualifier2-a2 .team-item").remove();
 			    	$(".finals-a2 .team-item").remove();
-			    	var li = "<div class='team-img team-item' id='"+team.teamid+"'><img src='"+imgBucket+""+team.displayName.toLowerCase()+".png' alt=''></div>";
+			    	var li = "<div class='team-img team-item' id='"+team.teamid+"'><img src='"+imgBucket+""+team.displayName.toLowerCase()+".png' alt=''><div class='selected-item gr_bg "+team.displayName.toLowerCase()+"'></div></div>";
 			    	$(".qualifier2-a2").append ( li );	
 	            }
 		    });
@@ -544,7 +549,7 @@
 
 	            if(qualifier2item == team.teamid) {
 			    	$(".qualifier2-a1 .team-item").remove();
-			    	var li = "<div class='team-img team-item' id='"+team.teamid+"'><img src='"+imgBucket+""+team.displayName.toLowerCase()+".png' alt=''></div>";
+			    	var li = "<div class='team-img team-item' id='"+team.teamid+"'><img src='"+imgBucket+""+team.displayName.toLowerCase()+".png' alt=''><div class='selected-item gr_bg "+team.displayName.toLowerCase()+"'></div></div>";
 			    	$(".qualifier2-a1").append ( li );	
 	            }
 		    });
@@ -554,12 +559,12 @@
 	    	updateteamid = updateteamid[updateteamid.length -1];
 	    	$(".winner-item").remove();
 	    	if(updateteamid==1 || updateteamid==2){
-	    		$(".qualifier2 .team-items, .qualifier1 .team-items").removeClass('deselect');
+	    		$(".qualifier2 .team-items, .qualifier1 .team-items, .finals .team-items").removeClass('deselect selected');
 	    		$(".finals-a1 .team-item, .finals-a2 .team-item").remove();
 	    		$(".qualifier2-a1 .team-item").remove();
 	    	}
 	    	if(updateteamid==3 || updateteamid==4){
-		    	$(".qualifier2 .team-items, .eliminator .team-items").removeClass('deselect');
+		    	$(".qualifier2 .team-items, .eliminator .team-items, .finals .team-items").removeClass('deselect selected');
 		    	$(".qualifier2-a2 .team-item").remove();
 		    	$(".finals-a2 .team-item").remove();	
 	    	}
