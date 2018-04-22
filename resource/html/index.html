@@ -41,9 +41,9 @@
 	                </div>
 	                <div class="collapse navbar-collapse">
 	                    <ul class="nav navbar-nav navbar-right">
-	                    	<li><a href="#home">Home</a></li>
-	                        <li><a href="#predictor">Predictor</a></li>
-	                        <li><a href="#action">Fantacy Leauge</a></li>                                       
+	                    	<li><a class="link-scroll" href="#home">Home</a></li>
+	                        <li><a class="link-scroll" href="#predictor">Predictor</a></li>
+	                        <li><a class="link-scroll" href="#action">Fantacy Leauge</a></li>                                       
 	                    </ul>
 	                </div>
 	            </div>
@@ -58,7 +58,7 @@
 	                    <div class="slide-text">
 	                        <h1>Become a Game Predictor</h1>
 	                        <p>Choose you favorite team and know how the IPL playoff round will be..</p>
-	                        <a href="#" class="btn btn-white">Predict Now</a>
+	                        <a href="#predictor" class="link-scroll btn btn-white">Predict Now</a>
 	                    </div>
 	                    <img src="images/home/slider/cricketer.png" class="slider-hill" alt="slider image">
 	                </div>
@@ -106,6 +106,7 @@
 						</div>
 						<div class="leagueStage text-center">
 							<h3>League stage</h3>
+							<div class="info-text"><i class="badge badge-success">Drag and drop the first 4 teams</i></div>
 						</div>
 						<div class="row">
 							<div class="col-sm-12">
@@ -155,7 +156,8 @@
 						</div>
 
     					<div class="playoffsRounds text-center">
-							<h3>Playoffs</h3>        						
+							<h3>Playoffs</h3>      
+							<div class="info-text"><i class="badge badge-success">Click the team to choose</i></div>
 	        				<div class="row">
 	        					<div class="col-sm-4">
 				        			<h4>Qualifier 1</h4>
@@ -236,6 +238,34 @@
 									</div>
 								</div>
 	        				</div>
+
+	        				<div class="social-icons text-center">
+	                            <div class="social-icons-list fb"><span class="fb"><i class="fa fa-facebook"></i></span></div>
+	                            <div class="social-icons-list tw"><span class="tw"><i class="fa fa-twitter"></i></span></div>
+	        				</div>
+	        			</div>	
+	        			<div class="playoffsRounds text-center">
+							<h3>Send a message</h3>
+							<div class="info-text"><i class="badge badge-success">Share your details and participate in leagueboards</i></div>
+			        		<div class="contact-form">
+	        					<div class="row">
+	        						<div class="col-xs-4 col-xs-offset-4">
+				                        <form id="main-contact-form123" name="contact-form" method="post" action="phpemail.php">
+				                            <div class="form-group">
+				                                <input type="text" name="yourname" class="form-control" required="required" placeholder="Name">
+				                            </div>
+				                            <div class="form-group">
+				                                <input type="email" name="youremail" class="form-control" required="required" placeholder="Email Id">
+				                            </div>
+				                            <input type="hidden" id="formwinnerName" name="formwinnerName">
+				                            <div class="form-group">
+				                                <input type="submit" name="submit" class="btn btn-submit" value="Submit">
+				                            </div>
+				                        </form>
+				                    </div>
+	        					</div>
+	        				</div>
+
     					</div>
 
 					</div>
@@ -302,7 +332,6 @@
     <script type="text/javascript" src="js/jquery.js"></script>
     <script src="js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/lightbox.min.js"></script>
     <script type="text/javascript" src="js/wow.min.js"></script>
     <script type="text/javascript" src="js/main.js"></script>  
 
@@ -354,8 +383,8 @@
 	    });
     	
 
-        var simulatedWinner = '';
-        var shareBucket = "teams/";        
+        var winnerName = '';
+        var shareBucket = "http://iplpredictor.tk/teams/";        
         var imgBucket = "images/icons_bg/";
         var imgBucketplain = "images/icons_plain/";
         var winnersBucket = "teams/";
@@ -510,6 +539,9 @@
 			    	li += team.fullName+"</div>";
 			    	li += "</div>";
 			    	$(".winner-items").append ( li );	
+			    	$(".social-icons").addClass('active');
+			    	winnerName = team.displayName.toLowerCase();
+			    	$("#formwinnerName").val(winnerName);
 	            }
 		    });
 	    };
@@ -575,7 +607,43 @@
 
 	    };
 
+
+        $(document).on("click",".link-scroll",function() {
+			if (this.hash !== "") {
+				event.preventDefault();
+				var hash = this.hash;
+				$('html, body').animate({
+					scrollTop: $(hash).offset().top
+				});
+			} 
+			return false;
+		});
+
+		// http://iplpredictor.tk/teams/srh.html?redirect=http://iplpredictor.tk
+
+
+		$( '.social-icons-list span' ).click ( function ( e ) {
+
+			var url = '';
+			var pageUrl = shareBucket + winnerName + ".html";
+			var article = "http://iplpredictor.tk/";
+			var redirectUrl = "?redirect=" + article;
+			event.preventDefault();
+
+			if ( $( e.currentTarget ).hasClass ( 'fb' ) ) url = "http://www.facebook.com/share.php?u=" + pageUrl + redirectUrl;
+			if ( $( e.currentTarget ).hasClass ( 'tw' ) ) url = "http://twitter.com/share?url=" + pageUrl + redirectUrl;
+
+			console.log("url="+url);
+			window.open ( url );
+		} );
+
     });
     </script> 
+
+	<script>
+		$(window).load(function() {
+			$('body div:last').remove();
+		});
+	</script>
 </body>
 </html>

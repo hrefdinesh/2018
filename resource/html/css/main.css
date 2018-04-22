@@ -3078,11 +3078,20 @@ span.stButton_gradient,
 .leagueStage h3,
 .playoffsRounds h3{
   position: relative;
-  margin:30px auto;
+  margin:30px auto 10px auto;
   padding-bottom: 10px;
   border-bottom: solid 1px #e0e0e0;
   text-align: center;
   font-weight: 500;
+}
+.info-text{
+  margin-bottom: 10px;
+}
+.leagueStage .badge,
+.playoffsRounds .badge{
+  color: #ffffff;
+  font-weight: normal;
+  background: rgb(53, 188, 210);
 }
 .leauge_head{
   font-size: 24px;
@@ -3177,3 +3186,34 @@ span.stButton_gradient,
 .play-info{
   margin:30px auto 30px auto;
 }
+.social-icons-list{
+  display: inline-block;
+}
+.social-icons-list span{
+  display: block;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  line-height: 32px;
+  text-align: center;
+  vertical-align: middle;
+  margin: auto 10px;
+}
+.social-icons-list span.fb{
+  background-color: #3B5998;
+}
+.social-icons-list span.tw{
+  background-color: #00aced;
+}
+.social-icons-list span i{
+  color: #fff;
+}
+.contact-form{
+
+}
+/*.social-icons{
+  display: none;
+}
+.social-icons.active{
+  display: block;
+}*/
