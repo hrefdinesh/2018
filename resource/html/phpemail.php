@@ -94,7 +94,7 @@
                                     <table width="620" align="center" cellpadding="0" cellspacing="0" style="border-collapse:collapse; text-align:left; font-family:Arial, Helvetica, sans-serif; font-weight:normal; font-size:12px; line-height:15pt; color:#999999; margin:0 auto;">
                                         <tr>
                                             <td bgcolor="#FFFFFF"  valign="top">
-                                            <img alt="image" height="337" src="http://iplpredictor.tk/teams/'. $winnerName . '.jpg" width="620" border="0" align="left" vspace="0" hspace="0" style="display:block;"></td>
+                                            <img alt="image" height="337" src="https://raw.githubusercontent.com/hrefdinesh/2018/master/teams/'. $winnerName . '.jpg" width="620" border="0" align="left" vspace="0" hspace="0" style="display:block;"></td>
                                         </tr>
                                         <tr>
                                             <td bgcolor="#FFFFFF" style="padding:15px 20px; font-family:Arial, Helvetica, sans-serif; font-size:12px; line-height:15pt; color:#999999;">
